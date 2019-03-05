@@ -5,6 +5,7 @@ export PATH="$coreutils/bin:$gcc/bin:$binutils/bin"
 
 # Nix exports the decided out path, but we'll need to create it by ourself
 mkdir "$out"
+mkdir "$out/bin"
 
 # The $src variable came from "src = ./src;" in ./default.nix
-gcc "$src/hello.c" -o "$out/hello"
+gcc "$src/hello.c" -o "$out/bin/hello"
