@@ -17,3 +17,6 @@ eval "${buildPhase}"
 
 echo "Installing"
 eval "${installPhase}"
+
+echo "Post-installation Fixup"
+eval "${fixupPhase}"
