@@ -1,9 +1,20 @@
-with import <nixpkgs> {}; derivation {
+let
+  pkgs = import <nixpkgs> {};
+  mkDerivation = import ./make-derivation.nix pkgs;
+in with pkgs; mkDerivation {
   name = "hello";
-  system = builtins.currentSystem;
-  builder = "${bash}/bin/bash";
-  args = [ ./build.sh ];
+
   src = ./src;
-  inherit gcc coreutils;
-  binutils = if builtins.match ".*darwin" builtins.currentSystem != null then binutils-unwrapped else null;
+  buildInputs = [ coreutils gcc ];
+
+  configurePhase = ''
+    declare -xp
+  '';
+  buildPhase = ''
+    gcc "$src/hello.c" -o ./hello
+  '';
+  installPhase = ''
+    mkdir -p "$out/bin"
+    cp ./hello "$out/bin/"
+  '';
 }
