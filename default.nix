@@ -1,12 +1,16 @@
-let
-  pkgs = import <nixpkgs> {};
-  mkDerivation = import ./make-derivation.nix pkgs;
-in with pkgs; mkDerivation {
+with import <nixpkgs> {}; stdenv.mkDerivation {
   name = "hello";
 
+  # Source Code
+  # See: https://nixos.org/nixpkgs/manual/#ssec-unpack-phase
   src = ./src;
+
+  # Dependencies
+  # See: https://nixos.org/nixpkgs/manual/#ssec-stdenv-dependencies
   buildInputs = [ coreutils gcc ];
 
+  # Build Phases
+  # See: https://nixos.org/nixpkgs/manual/#sec-stdenv-phases
   configurePhase = ''
     declare -xp
   '';
